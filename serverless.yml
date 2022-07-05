@@ -8,10 +8,12 @@ provider:
   # Global Environment variables - used in every functions
   env:
     test: test
+  secret:
+    env_delphsPrivateKey: ${env:DELPHS_PRIVATE_KEY}
   scwToken: ${env:SCW_SECRET_KEY}
   scwProject: ${env:SCW_DEFAULT_PROJECT_ID}
   scwRegion: ${env:SCW_REGION}
- 
+
 plugins:
   - serverless-scaleway-functions
   - serverless-plugin-typescript
@@ -24,7 +26,8 @@ package:
 functions:
   first:
     handler: handler.handle
+    memoryLimit: 2048
     # Local environment variables - used only in given function
     env:
-      local: local
+      TESTNET: "true"
 

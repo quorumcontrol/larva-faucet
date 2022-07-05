@@ -1,0 +1,4 @@
+node_modules
+nodejs-es-node_modules
+.env
+.serverless

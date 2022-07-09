@@ -25,21 +25,21 @@ const schainSigner = new Wallet(process.env.env_delphsPrivateKey).connect(schain
 
 const badgeOfAssembly = BadgeOfAssembly__factory.connect(BOA_ADDRESS, schainSigner)
 
-const highWaterForSFuel = utils.parseEther('0.5')
+const highWaterForSFuel = utils.parseEther('1')
 
 
 export async function handle(event:any, context:any, callback:any) {
   const address = JSON.parse(event.body).address
 
   // first get the balances
-  const [sfuelBalance, badgeBalance] = await Promise.all([
+  const [sfuelBalance, badgeTokens] = await Promise.all([
     schainProvider.getBalance(address),
-    badgeOfAssembly.balanceOf(address, 1)
+    badgeOfAssembly.userTokens(address)
   ])
 
-  log(address, 'sfuel: ', utils.formatEther(sfuelBalance), 'badge: ', badgeBalance.toNumber())
+  log(address, 'sfuel: ', utils.formatEther(sfuelBalance), 'badges: ', badgeTokens.length)
 
-  if (badgeBalance.eq(0)) {
+  if (badgeTokens.length === 0) {
     log(address, 'no badge')
     return callback(null, {
       statusCode: 400,

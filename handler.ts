@@ -1,11 +1,11 @@
 
-import { ethers, providers, Transaction, utils, Wallet } from "ethers";
+import { ethers, providers, utils, Wallet } from "ethers";
 import { BadgeOfAssembly__factory } from "./badge-of-assembly-types/typechain";
 import debug from 'debug'
 
 const isTestnet = !!process.env.TESTNET
 
-const TESTNET_BOA = "0xd8929b56BaD3B72068B682F19Cdeff92b2f5164B";
+const TESTNET_BOA = "0x881256ada5dD7CcB2457226C4bC978B067daF70B";
 const MAINNET_BOA = "0x2C6FD25071Fd516947682f710f6e9F5eD610207F";
 
 export const BOA_ADDRESS = isTestnet ? TESTNET_BOA : MAINNET_BOA
@@ -18,9 +18,9 @@ if (!process.env.env_delphsPrivateKey) {
   throw new Error("must have a DELPHS private key")
 }
 
-const rpcUrl = isTestnet ? 'https://testnet-proxy.skalenodes.com/v1/whispering-turais' : 'https://mainnet.skalenodes.com/v1/haunting-devoted-deneb'
+const rpcUrl = isTestnet ? 'https://staging-v2.skalenodes.com/v1/rapping-zuben-elakrab' : 'https://mainnet.skalenodes.com/v1/haunting-devoted-deneb'
 
-const schainProvider = new ethers.providers.JsonRpcProvider(rpcUrl)
+const schainProvider = new ethers.providers.StaticJsonRpcProvider(rpcUrl)
 const schainSigner = new Wallet(process.env.env_delphsPrivateKey).connect(schainProvider)
 
 const badgeOfAssembly = BadgeOfAssembly__factory.connect(BOA_ADDRESS, schainSigner)
